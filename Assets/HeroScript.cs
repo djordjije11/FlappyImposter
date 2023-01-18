@@ -8,7 +8,7 @@ public class HeroScript : MonoBehaviour
     public AudioSource myAudioSource;
     public float flapStrength;
     public LogicScript logicScript;
-    public bool birdIsAlive = true;
+    public bool IsHeroAlive = true;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class HeroScript : MonoBehaviour
         {
             DeadHero();
         }
-        if(Input.GetKeyDown(KeyCode.Space) && birdIsAlive == true)
+        if(Input.GetKeyDown(KeyCode.Space) && IsHeroAlive == true)
         {
             myRigidBody.velocity = Vector2.up * flapStrength; //Vector2.up predstavlja vektor (0,1)   0 x osa, 1 y osa
         }
@@ -45,9 +45,9 @@ public class HeroScript : MonoBehaviour
 
     private void DeadHero()
     {
-        if(birdIsAlive == true)
+        if(IsHeroAlive == true)
         {
-            birdIsAlive = false;
+            IsHeroAlive = false;
             myAudioSource.Stop();
             logicScript.GameOver();
             mySpriteRenderer.color = Color.HSVToRGB(100, 100, 100);

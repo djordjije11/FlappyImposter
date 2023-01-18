@@ -14,6 +14,7 @@ public class LogicScript : MonoBehaviour
     public AudioSource scoreAudio;
     public AudioSource gameOverAudio;
     public AudioSource speedUpAudio;
+    private bool IsHeroAlive = true;
     private void Start()
     {
         scoreToNextLevel = SCORE_FOR_NEXT_LEVEL;
@@ -23,6 +24,8 @@ public class LogicScript : MonoBehaviour
     [ContextMenu("Increase Score")]
     public void AddScore(int i)
     {
+        if (IsHeroAlive == false)
+            return;
         playerScore += i;
         if(scoreToNextLevel == SCORE_FOR_NEXT_LEVEL - 2)
         {
@@ -35,6 +38,14 @@ public class LogicScript : MonoBehaviour
         {
             SpeedUp(5);
             scoreToNextLevel = SCORE_FOR_NEXT_LEVEL;
+        }
+    }
+
+    private void Update()
+    {
+        if(IsHeroAlive == false && Input.GetKey(KeyCode.Space))
+        {
+            RestartGame();
         }
     }
 
@@ -52,6 +63,7 @@ public class LogicScript : MonoBehaviour
 
     public void GameOver()
     {
+        IsHeroAlive = false;
         gameOverAudio.Play();
         gameOverScreen.SetActive(true);
     }
