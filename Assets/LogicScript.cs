@@ -9,6 +9,7 @@ public class LogicScript : MonoBehaviour
     public int SCORE_FOR_NEXT_LEVEL = 10;
     private int scoreToNextLevel;
     public Text scoreText;
+    public Text highscoreText;
     public GameObject gameOverScreen;
     public GameObject speedUpScreen;
     public AudioSource scoreAudio;
@@ -56,13 +57,16 @@ public class LogicScript : MonoBehaviour
 
     public void RestartGame()
     {
-        //playerScore = 0;
-        //RefreshScoreText();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void GameOver()
     {
+        if (playerScore > PlayerPrefs.GetInt("highscore"))
+        {
+            PlayerPrefs.SetInt("highscore", playerScore);
+        }
+        highscoreText.text = "HIGHSCORE: " + PlayerPrefs.GetInt("highscore").ToString();
         IsHeroAlive = false;
         gameOverAudio.Play();
         gameOverScreen.SetActive(true);
